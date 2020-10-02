@@ -15,8 +15,9 @@ using QtNodes::NodeValidationState;
 using QtNodes::PortIndex;
 using QtNodes::PortType;
 
-/// The model dictates the number of inputs and outputs for the Node.
-/// In this example it has no logic.
+/// 该模型指示节点的输入和输出数量
+/// 在这儿没有指示具体逻辑是什么样的
+/// 具体逻辑等着具体的操作类继承之后定义.
 class MathOperationDataModel : public NodeDataModel {
     Q_OBJECT
 
