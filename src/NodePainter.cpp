@@ -83,7 +83,7 @@ void NodePainter::drawNodeRect(QPainter *painter,
     QRectF boundary(-diam, -diam, 2.0 * diam + geom.width(),
                     2.0 * diam + geom.height());
 
-    double const radius = 2.0;
+    double const radius = 0.0;
 
     painter->drawRoundedRect(boundary, radius, radius);
 }
@@ -328,7 +328,7 @@ void NodePainter::drawValidationRect(QPainter *painter,
             painter->setBrush(nodeStyle.WarningColor);
         }
 
-        double const radius = 3.0;
+        double const radius = 0.0;
 
         float diam = nodeStyle.ConnectionPointDiameter;
 

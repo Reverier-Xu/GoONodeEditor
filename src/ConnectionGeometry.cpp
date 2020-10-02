@@ -10,7 +10,7 @@ using QtNodes::PortType;
 ConnectionGeometry::ConnectionGeometry()
     : _in(0, 0),
       _out(0, 0)
-      //, _animationPhase(0)
+      //, _animationPhase(0) // 这儿好像不用初始化了
       ,
       _lineWidth(3.0),
       _hovered(false) {}
