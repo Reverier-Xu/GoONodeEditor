@@ -4,7 +4,6 @@
 #include "ConnectionGeometry.hpp"
 #include "ConnectionGraphicsObject.hpp"
 #include "ConnectionState.hpp"
-#include "NodeData.hpp"
 #include "StyleCollection.hpp"
 
 using QtNodes::Connection;
@@ -89,7 +88,7 @@ static void drawSketchLine(QPainter *painter, Connection const &connection) {
             QtNodes::StyleCollection::connectionStyle();
 
         QPen p;
-        p.setWidth(connectionStyle.constructionLineWidth());
+        p.setWidthF(connectionStyle.constructionLineWidth());
         p.setColor(connectionStyle.constructionColor());
         p.setStyle(Qt::DashLine);
 
@@ -124,7 +123,7 @@ static void drawHoveredOrSelected(QPainter *painter,
             QtNodes::StyleCollection::connectionStyle();
         double const lineWidth = connectionStyle.lineWidth();
 
-        p.setWidth(2 * lineWidth);
+        p.setWidthF(2 * lineWidth);
         p.setColor(selected ? connectionStyle.selectedHaloColor()
                             : connectionStyle.hoveredColor());
 
@@ -149,7 +148,7 @@ static void drawNormalLine(QPainter *painter, Connection const &connection) {
     auto const &connectionStyle = QtNodes::StyleCollection::connectionStyle();
 
     QColor normalColorOut = connectionStyle.normalColor();
-    QColor normalColorIn = connectionStyle.normalColor();
+    QColor normalColorIn;
     QColor selectedColor = connectionStyle.selectedColor();
 
     bool gradientColor = false;
@@ -176,7 +175,7 @@ static void drawNormalLine(QPainter *painter, Connection const &connection) {
     // draw normal line
     QPen p;
 
-    p.setWidth(lineWidth);
+    p.setWidthF(lineWidth);
 
     auto const &graphicsObject = connection.getConnectionGraphicsObject();
     bool const selected = graphicsObject.isSelected();
@@ -197,10 +196,10 @@ static void drawNormalLine(QPainter *painter, Connection const &connection) {
             double ratio = double(i + 1) / segments;
 
             if (i == segments / 2) {
-                QColor c = normalColorIn;
-                if (selected) c = c.lighter(120);
+                QColor color_in = normalColorIn;
+                if (selected) color_in = color_in.lighter(120);
 
-                p.setColor(c);
+                p.setColor(color_in);
                 painter->setPen(p);
             }
             painter->drawLine(cubic.pointAtPercent(ratioPrev),
@@ -213,7 +212,7 @@ static void drawNormalLine(QPainter *painter, Connection const &connection) {
             painter->drawEllipse(cubic.pointAtPercent(0.5), 8, 8);
             painter->setBrush(Qt::NoBrush);
             QPen pen = QPen();
-            pen.setWidthF(3);
+            pen.setWidthF(1);
             pen.setColor(QColor(100, 150, 255));
             painter->setPen(pen);
             painter->drawEllipse(cubic.pointAtPercent(0.5), 13, 13);

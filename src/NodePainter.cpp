@@ -237,6 +237,12 @@ void NodePainter::drawModelName(QPainter *painter, NodeGeometry const &geom,
     painter->setPen(nodeStyle.FontColor);
     painter->drawText(position, name);
 
+    float diam = nodeStyle.ConnectionPointDiameter;
+
+    painter->setBrush(QColor(200, 200, 200, 40));
+    painter->setPen(Qt::NoPen);
+    painter->drawRect(-diam+1, -diam+1, 2.0 * diam + geom.width()-2, diam + geom.entryHeight());
+
     f.setBold(false);
     painter->setFont(f);
 }

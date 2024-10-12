@@ -31,13 +31,13 @@ if(NE_DEVELOPER_DEFAULTS)
 endif()
 
 # Find the QtWidgets library
-find_package(Qt5 5.15 COMPONENTS
+find_package(Qt6 COMPONENTS
              Core
              Widgets
              Gui
              OpenGL)
 
-qt5_add_resources(RESOURCES ./resources/resources.qrc)
+qt_add_resources(RESOURCES ./resources/resources.qrc)
 
 # Unfortunately, as we have a split include/src, AUTOMOC doesn't work.
 # We'll have to manually specify some files
@@ -86,15 +86,15 @@ target_include_directories(nodes
 
 target_link_libraries(nodes
   PUBLIC
-    Qt5::Core
-    Qt5::Widgets
-    Qt5::Gui
-    Qt5::OpenGL
+    Qt6::Core
+    Qt6::Widgets
+    Qt6::Gui
+    Qt6::OpenGL
 )
 
 target_compile_definitions(nodes
   PUBLIC
-    ${Qt5Widgets_DEFINITIONS}
+    ${Qt6Widgets_DEFINITIONS}
     NODE_EDITOR_SHARED
   PRIVATE
     NODE_EDITOR_EXPORTS
@@ -121,13 +121,13 @@ set_target_properties(nodes
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
 )
 
-######
+# # # # # #
 # Moc
-##
+# #
 
 file(GLOB_RECURSE HEADERS_TO_MOC include/nodes/internal/*.hpp)
 
-qt5_wrap_cpp(nodes_moc
+qt_wrap_cpp(nodes_moc
     ${HEADERS_TO_MOC}
   TARGET nodes
   OPTIONS --no-notes # Don't display a note for the headers which don't produce a moc_*.cpp
@@ -135,17 +135,17 @@ qt5_wrap_cpp(nodes_moc
 
 target_sources(nodes PRIVATE ${nodes_moc})
 
-###########
+# # # # # ######
 # Examples
-##
+# #
 
 if(BUILD_EXAMPLES)
   add_subdirectory(examples)
 endif()
 
-###############
+# # # # # ##########
 # Installation
-##
+# #
 
 include(GNUInstallDirs)
 
